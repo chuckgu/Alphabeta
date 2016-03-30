@@ -77,7 +77,7 @@ class NN_Model(object):
         i = iter(weights)
 
         for param in self.params:
-            param.set_value(i.next().get_value())
+            param.set_value(i.next())
 
     def __setstate__(self, state):
         """ Set parameters from state sequence.
