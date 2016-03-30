@@ -335,8 +335,9 @@ class NN_Model(object):
                 batch_ids = index_array[batch_start:batch_end]
                 try:
                     ins_batch = slice_X(ins, batch_ids)
-                    
-                    ins_batch=[load_image(ins_batch[0]),ins_batch[1],ins_batch[2]]
+                    if len(ins_batch)==3:
+                        ins_batch=[load_image(ins_batch[0]),ins_batch[1],ins_batch[2]]
+                    else: ins_batch=[load_image(ins_batch[0]),ins_batch[1]]
 
                 except TypeError as err:
                     print('TypeError while preparing batch. \
@@ -499,7 +500,11 @@ class NN_Model(object):
         for batch_index, (batch_start, batch_end) in enumerate(batches):
             batch_ids = index_array[batch_start:batch_end]
             ins_batch = slice_X(ins, batch_ids)
-            ins_batch=(load_image(ins_batch[0]),ins_batch[1],ins_batch[2])
+            
+            if len(ins_batch)==3:
+                ins_batch=[load_image(ins_batch[0]),ins_batch[1],ins_batch[2]]
+            else: ins_batch=[load_image(ins_batch[0]),ins_batch[1]]
+
             batch_outs = f(*ins_batch)
             if type(batch_outs) == list:
                 if batch_index == 0:
